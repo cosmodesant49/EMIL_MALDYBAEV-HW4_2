@@ -27,4 +27,9 @@
         android:name="com.geeks.emil_maldybaev_hw4_2.ui.Task.TaskFragment"
         android:label="Task"
         tools:layout="@layout/fragment_task" />
+    <fragment
+        android:id="@+id/onBoardingFragment"
+        android:name="com.geeks.emil_maldybaev_hw4_2.ui.onBoardinag.OnBoardingFragment"
+        android:label="fragment_on_boarding"
+        tools:layout="@layout/fragment_on_boarding" />
 </navigation>
