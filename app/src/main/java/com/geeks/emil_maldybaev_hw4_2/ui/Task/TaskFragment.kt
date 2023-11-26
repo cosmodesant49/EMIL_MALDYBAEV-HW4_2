@@ -30,24 +30,23 @@ private lateinit var binding: FragmentTaskBinding
 
 
         binding.btnSave.setOnClickListener {
-            if (binding.etTitle.text.isBlank() || binding.etDesc.text.isBlank()) {
-                Toast.makeText(
-                    requireContext(),
-                    "Strings cannot be empty",
-                    Toast.LENGTH_SHORT
-                ).show()
-                //return@setOnClickListener
-            }else {
-                val data = Task(
-                    title = binding.etTitle.text.toString(),
-                    desc = binding.etDesc.text.toString()
-                )
-                setFragmentResult(TASK_RESULT_KEY, bundleOf(TASK_KEY to data))
+            if (binding.etTitle.text.isNotEmpty()){
+                save()
+            }else binding.etTitle.error="Cannot be empty"
 
-                findNavController().navigateUp()
-            }
         }
     }
+
+    private fun save() {
+        val data = Task(
+            title = binding.etTitle.text.toString(),
+            desc = binding.etDesc.text.toString()
+        )
+        setFragmentResult(TASK_RESULT_KEY, bundleOf(TASK_KEY to data))
+
+        findNavController().navigateUp()
+    }
+
     companion object{
         const val TASK_RESULT_KEY = "task.result.key"
         const val TASK_KEY = "task.key"
