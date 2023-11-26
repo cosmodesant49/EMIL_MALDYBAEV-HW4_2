@@ -1,5 +1,6 @@
 package com.geeks.emil_maldybaev_hw4_2.ui.home
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -24,7 +25,7 @@ class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
 
-    private val adapter = TaskAdapter()
+    private val adapter = TaskAdapter(this::onLongClickItem)
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -48,6 +49,24 @@ class HomeFragment : Fragment() {
         binding.fab.setOnClickListener {
             findNavController().navigate(R.id.taskFragment)
         }
+    }
+
+    private fun onLongClickItem(task: Task) {
+        showAlertDialog(task)
+    }
+
+    private fun showAlertDialog(task: Task) {
+        val alertDialog = AlertDialog.Builder(requireContext())
+        alertDialog.setTitle(task.title)
+            .setMessage("You really want to delete this text?")
+            .setCancelable(true)
+            .setPositiveButton("Delete") { _, _ ->
+                App.db.taskDao().delete(task)
+                val data = App.db.taskDao().getAll()
+                adapter.addTask(data)
+            }
+            .setNegativeButton("Save"){_,_-> }
+            .show()
     }
 
     override fun onDestroyView() {

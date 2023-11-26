@@ -8,12 +8,14 @@ import com.geeks.emil_maldybaev_hw4_2.databinding.ActivityMainBinding
 import com.geeks.emil_maldybaev_hw4_2.databinding.ItemTaskBinding
 import com.geeks.emil_maldybaev_hw4_2.model.Task
 
-class TaskAdapter: Adapter<TaskAdapter.TaskViewHolder>() {
+class TaskAdapter(
+    val onLongClickItem: (task: Task) -> Unit,
+) : Adapter<TaskAdapter.TaskViewHolder>() {
 
     private val list = arrayListOf<Task>(
     )
 
-    fun addTask(tasks: List<Task>){
+    fun addTask(tasks: List<Task>) {
         list.clear()
         list.addAll(tasks)
 
@@ -35,14 +37,19 @@ class TaskAdapter: Adapter<TaskAdapter.TaskViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
-    return holder.bind(list[position])
+        return holder.bind(list[position])
     }
 
-    inner class TaskViewHolder(private val binding: ItemTaskBinding) : ViewHolder(binding.root){
+    inner class TaskViewHolder(private val binding: ItemTaskBinding) : ViewHolder(binding.root) {
 
-    fun bind(task: Task) {
-        binding.tvTitle.text = task.title
-        binding.tvDesc.text = task.desc
+        fun bind(task: Task) {
+            binding.tvTitle.text = task.title
+            binding.tvDesc.text = task.desc
+
+            itemView.setOnLongClickListener{
+                onLongClickItem(task)
+                true
+            }
         }
     }
 }
