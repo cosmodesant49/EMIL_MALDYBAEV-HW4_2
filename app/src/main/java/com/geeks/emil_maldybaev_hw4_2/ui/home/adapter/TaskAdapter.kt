@@ -13,9 +13,11 @@ class TaskAdapter: Adapter<TaskAdapter.TaskViewHolder>() {
     private val list = arrayListOf<Task>(
     )
 
-    fun addTask(task: Task){
-        list.add(0,task)
-        notifyItemChanged(0)
+    fun addTask(tasks: List<Task>){
+        list.clear()
+        list.addAll(tasks)
+
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {

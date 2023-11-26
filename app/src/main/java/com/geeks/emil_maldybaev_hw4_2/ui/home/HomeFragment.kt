@@ -11,6 +11,7 @@ import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.geeks.emil_maldybaev_hw4_2.App
 import com.geeks.emil_maldybaev_hw4_2.R
 import com.geeks.emil_maldybaev_hw4_2.databinding.FragmentHomeBinding
 import com.geeks.emil_maldybaev_hw4_2.model.Task
@@ -41,10 +42,9 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.recyclerView.adapter = adapter
-        setFragmentResultListener(TASK_RESULT_KEY) { _, bundle ->
-            val data = bundle.getSerializable(TASK_KEY) as Task
-            adapter.addTask(data)
-        }
+        val data = App.db.taskDao().getAll()
+        adapter.addTask(data)
+        Log.e("ololo", "onViewCreated" + data)
         binding.fab.setOnClickListener {
             findNavController().navigate(R.id.taskFragment)
         }
