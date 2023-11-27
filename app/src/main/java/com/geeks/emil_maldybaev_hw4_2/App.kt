@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.room.Room
 import com.geeks.emil_maldybaev_hw4_2.data.local.db.AppDatabase
 
-class App: Application() {
+class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
@@ -13,7 +13,8 @@ class App: Application() {
             AppDatabase::class.java, "database-name"
         ).allowMainThreadQueries().build()
     }
-    companion object{
+
+    companion object {
         lateinit var db: AppDatabase
     }
 }

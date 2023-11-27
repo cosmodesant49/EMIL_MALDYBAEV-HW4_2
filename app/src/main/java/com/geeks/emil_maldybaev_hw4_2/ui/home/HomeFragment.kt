@@ -65,7 +65,7 @@ class HomeFragment : Fragment() {
                 val data = App.db.taskDao().getAll()
                 adapter.addTask(data)
             }
-            .setNegativeButton("Save"){_,_-> }
+            .setNegativeButton("Save") { _, _ -> }
             .show()
     }
 

@@ -41,26 +41,26 @@ class OnBoardingAdapter(private val onClick: () -> Unit) :
     }
 
     override fun getItemCount(): Int {
-                return list.size
-
-        }
-
-        override fun onBindViewHolder(holder: OnBoardingViewHolder, position: Int) {
-            holder.bind((list.get(position)))
-        }
-
-        inner class OnBoardingViewHolder(private val binding: ItemOnboardingBinding) :
-            ViewHolder(binding.root) {
-            fun bind(boarding: OnBoarding) {
-                binding.tvTitle.text = boarding.title
-                binding.tvDesc.text = boarding.desc
-
-                Glide.with(binding.ivBoard.context).load(boarding.image).into(binding.ivBoard)
-                binding.btnStart.isVisible = adapterPosition == list.lastIndex
-                binding.tvSkip.isVisible = adapterPosition != list.lastIndex
-                binding.tvSkip.setOnClickListener { onClick() }
-                binding.btnStart.setOnClickListener { onClick() }
-            }
-        }
+        return list.size
 
     }
+
+    override fun onBindViewHolder(holder: OnBoardingViewHolder, position: Int) {
+        holder.bind((list.get(position)))
+    }
+
+    inner class OnBoardingViewHolder(private val binding: ItemOnboardingBinding) :
+        ViewHolder(binding.root) {
+        fun bind(boarding: OnBoarding) {
+            binding.tvTitle.text = boarding.title
+            binding.tvDesc.text = boarding.desc
+
+            Glide.with(binding.ivBoard.context).load(boarding.image).into(binding.ivBoard)
+            binding.btnStart.isVisible = adapterPosition == list.lastIndex
+            binding.tvSkip.isVisible = adapterPosition != list.lastIndex
+            binding.tvSkip.setOnClickListener { onClick() }
+            binding.btnStart.setOnClickListener { onClick() }
+        }
+    }
+
+}

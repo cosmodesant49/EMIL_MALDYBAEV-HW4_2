@@ -15,13 +15,13 @@ import com.geeks.emil_maldybaev_hw4_2.model.Task
 
 class TaskFragment : Fragment() {
 
-private lateinit var binding: FragmentTaskBinding
+    private lateinit var binding: FragmentTaskBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentTaskBinding.inflate(layoutInflater,container,false)
+        binding = FragmentTaskBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
@@ -31,9 +31,9 @@ private lateinit var binding: FragmentTaskBinding
 
 
         binding.btnSave.setOnClickListener {
-            if (binding.etTitle.text.isNotEmpty()){
+            if (binding.etTitle.text.isNotEmpty()) {
                 save()
-            }else binding.etTitle.error="Cannot be empty"
+            } else binding.etTitle.error = "Cannot be empty"
 
         }
     }
@@ -47,7 +47,7 @@ private lateinit var binding: FragmentTaskBinding
         findNavController().navigateUp()
     }
 
-    companion object{
+    companion object {
         const val TASK_RESULT_KEY = "task.result.key"
         const val TASK_KEY = "task.key"
     }

@@ -46,7 +46,7 @@ class TaskAdapter(
             binding.tvTitle.text = task.title
             binding.tvDesc.text = task.desc
 
-            itemView.setOnLongClickListener{
+            itemView.setOnLongClickListener {
                 onLongClickItem(task)
                 true
             }
