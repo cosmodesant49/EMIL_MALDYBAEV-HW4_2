@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
@@ -25,7 +26,7 @@ class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
 
-    private val adapter = TaskAdapter(this::onLongClickItem)
+    private val adapter = TaskAdapter(this::onLongClickItem,this::onClickItem)
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -53,6 +54,9 @@ class HomeFragment : Fragment() {
 
     private fun onLongClickItem(task: Task) {
         showAlertDialog(task)
+    }
+    private fun onClickItem(task: Task) {
+        findNavController().navigate(R.id.taskFragment, bundleOf(TASK_KEY to task))
     }
 
     private fun showAlertDialog(task: Task) {
