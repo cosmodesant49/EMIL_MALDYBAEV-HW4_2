@@ -56,7 +56,7 @@ class HomeFragment : Fragment() {
         showAlertDialog(task)
     }
     private fun onClickItem(task: Task) {
-        findNavController().navigate(R.id.taskFragment, bundleOf(TASK_KEY to task))
+        showAlertDialog2(task)
     }
 
     private fun showAlertDialog(task: Task) {
@@ -70,6 +70,20 @@ class HomeFragment : Fragment() {
                 adapter.addTask(data)
             }
             .setNegativeButton("Save") { _, _ -> }
+            .show()
+    }
+    private fun showAlertDialog2(task: Task) {
+        val alertDialog = AlertDialog.Builder(requireContext())
+        alertDialog.setTitle(task.title)
+            .setMessage("You really want to change this text?")
+            .setCancelable(true)
+            .setPositiveButton("Yes") { _, _ ->
+                findNavController().navigate(R.id.taskFragment, bundleOf(TASK_KEY to task))
+                App.db.taskDao().delete(task)
+                val data = App.db.taskDao().getAll()
+                adapter.addTask(data)
+            }
+            .setNegativeButton("No") { _, _ -> }
             .show()
     }
 

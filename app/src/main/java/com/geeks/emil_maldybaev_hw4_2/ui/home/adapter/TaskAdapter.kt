@@ -10,7 +10,7 @@ import com.geeks.emil_maldybaev_hw4_2.model.Task
 
 class TaskAdapter(
     val onLongClickItem: (task: Task) -> Unit,
-    val onClickItem: (task: Task) -> Unit
+    val onClickItem: (task: Task) -> Unit,
 ) : Adapter<TaskAdapter.TaskViewHolder>() {
 
     private val list = arrayListOf<Task>(
