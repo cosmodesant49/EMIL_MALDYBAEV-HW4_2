@@ -6,6 +6,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
+import com.geeks.emil_maldybaev_hw4_2.R
 import com.geeks.emil_maldybaev_hw4_2.databinding.FragmentOnBoardingBinding
 import com.geeks.emil_maldybaev_hw4_2.databinding.ItemOnboardingBinding
 import com.geeks.emil_maldybaev_hw4_2.model.OnBoarding
@@ -14,17 +15,17 @@ class OnBoardingAdapter(private val onClick: () -> Unit) :
     Adapter<OnBoardingAdapter.OnBoardingViewHolder>() {
     private val list = arrayListOf<OnBoarding>(
         OnBoarding(
-            "https://goods-photos.static1-sima-land.com/items/1879617/0/700-nw.jpg",
+            R.raw.qrcode,
             "Gtx 1050ti",
             "видеокарта для пк бюджета до 25 000, тянет большенство игр до 2020 года"
         ),
         OnBoarding(
-            "https://m.media-amazon.com/images/I/71M4pG5B6zS.jpg",
+            R.raw.qrcode,
             "Gtx 1660 super/ti",
             "видеокарта для пк бюджета до 50 000, тянет большенство игр до 2023 года"
         ),
         OnBoarding(
-            "https://www.digitaltrends.com/wp-content/uploads/2022/10/12-pin.00_00_03_05.Still003.jpg?fit=720%2C404&p=1",
+            R.raw.qrcode,
             "Rtx 4090",
             "видеокарта для пк c большим бюджетом, тянет все игры и будет тянуть еще несколько лет"
         )
@@ -54,8 +55,8 @@ class OnBoardingAdapter(private val onClick: () -> Unit) :
         fun bind(boarding: OnBoarding) {
             binding.tvTitle.text = boarding.title
             binding.tvDesc.text = boarding.desc
-
-            Glide.with(binding.ivBoard.context).load(boarding.image).into(binding.ivBoard)
+            boarding.image?.let { binding.ivBoard.setAnimation(it) }
+            //Glide.with(binding.ivBoard.context).load(boarding.image).into(binding.ivBoard)
             binding.btnStart.isVisible = adapterPosition == list.lastIndex
             binding.tvSkip.isVisible = adapterPosition != list.lastIndex
             binding.tvSkip.setOnClickListener { onClick() }
