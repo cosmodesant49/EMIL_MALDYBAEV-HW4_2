@@ -1,6 +1,6 @@
 package com.geeks.emil_maldybaev_hw4_2
 
-import android.os.Bundle
+import  android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
@@ -13,6 +13,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.geeks.emil_maldybaev_hw4_2.data.local.Pref
 import com.geeks.emil_maldybaev_hw4_2.databinding.ActivityMainBinding
 import com.geeks.emil_maldybaev_hw4_2.ui.onBoardinag.OnBoardingFragment
+import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
 
@@ -31,9 +32,11 @@ class MainActivity : AppCompatActivity() {
         val navView: BottomNavigationView = binding.navView
 
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
-        if (!pref.onShowed()) {
 
-            navController.navigate(R.id.onBoardingFragment)
+        if (!pref.onShowed()) { navController.navigate(R.id.onBoardingFragment)
+        }
+        if (FirebaseAuth.getInstance().currentUser?.uid ==null){
+            navController.navigate(R.id.phoneFragment)
         }
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -46,8 +49,13 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_profile
             )
         )
+        val fragmentWithoutBottomNav= setOf(
+            R.id.onBoardingFragment,
+            R.id.phoneFragment,
+            R.id.acceptFragment,
+        )
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
-            if (destination.id == R.id.onBoardingFragment) {
+            if (fragmentWithoutBottomNav.contains(destination.id)) {
                 navView.isVisible = false
                 supportActionBar?.hide()
             } else {
