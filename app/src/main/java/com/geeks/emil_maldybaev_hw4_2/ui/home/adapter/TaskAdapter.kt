@@ -2,6 +2,8 @@ package com.geeks.emil_maldybaev_hw4_2.ui.home.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.geeks.emil_maldybaev_hw4_2.databinding.ActivityMainBinding
@@ -11,17 +13,7 @@ import com.geeks.emil_maldybaev_hw4_2.model.Task
 class TaskAdapter(
     val onLongClickItem: (task: Task) -> Unit,
     val onClickItem: (task: Task) -> Unit,
-) : Adapter<TaskAdapter.TaskViewHolder>() {
-
-    private val list = arrayListOf<Task>(
-    )
-
-    fun addTask(tasks: List<Task>) {
-        list.clear()
-        list.addAll(tasks)
-
-        notifyDataSetChanged()
-    }
+) : ListAdapter<Task, TaskAdapter.TaskViewHolder>(TaskDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
         return TaskViewHolder(
@@ -33,12 +25,8 @@ class TaskAdapter(
         )
     }
 
-    override fun getItemCount(): Int {
-        return list.size
-    }
-
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
-        return holder.bind(list[position])
+        return holder.bind(getItem(position))
     }
 
     inner class TaskViewHolder(private val binding: ItemTaskBinding) : ViewHolder(binding.root) {
@@ -56,4 +44,11 @@ class TaskAdapter(
             }
         }
     }
+}
+class TaskDiffCallback : DiffUtil.ItemCallback<Task>() {
+    override fun areItemsTheSame(oldItem: Task, newItem: Task): Boolean =
+        oldItem.uid == newItem.uid
+
+    override fun areContentsTheSame(oldItem: Task, newItem: Task): Boolean =
+        oldItem == newItem
 }

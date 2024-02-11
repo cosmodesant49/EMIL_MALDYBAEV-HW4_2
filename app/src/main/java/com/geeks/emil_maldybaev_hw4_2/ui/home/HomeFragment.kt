@@ -45,7 +45,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.recyclerView.adapter = adapter
         val data = App.db.taskDao().getAll()
-        adapter.addTask(data)
+        adapter.submitList(data)
         Log.e("ololo", "onViewCreated" + data)
         binding.fab.setOnClickListener {
             findNavController().navigate(R.id.taskFragment)
@@ -67,7 +67,7 @@ class HomeFragment : Fragment() {
             .setPositiveButton("Delete") { _, _ ->
                 App.db.taskDao().delete(task)
                 val data = App.db.taskDao().getAll()
-                adapter.addTask(data)
+                adapter.submitList(data)
             }
             .setNegativeButton("Save") { _, _ -> }
             .show()
@@ -82,7 +82,7 @@ class HomeFragment : Fragment() {
                 findNavController().navigate(R.id.taskFragment, bundleOf(TASK_KEY to task))
                 App.db.taskDao().delete(task)
                 val data = App.db.taskDao().getAll()
-                adapter.addTask(data)
+                adapter.submitList(data)
             }
             .setNegativeButton("No") { _, _ -> }
             .show()
